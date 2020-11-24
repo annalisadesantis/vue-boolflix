@@ -5,6 +5,20 @@ var app = new Vue({
         movies: []
     },
     methods:{
+        getFasStar(average) {
+
+            let valore = average / 2;
+            let arrotondato = Math.round(valore);
+            return arrotondato;
+        },
+        getFarStar(average) {
+
+            let valore = average / 2;
+            let arrotondato = Math.round(valore);
+            let numero = 5 - arrotondato;
+
+            return numero;
+        },
         search(){
             axios
                 .get('https://api.themoviedb.org/3/search/movie', {
@@ -34,15 +48,6 @@ var app = new Vue({
                         }else if(movie.original_language == "de"){
                             movie.original_language = "flag/germany.png";
                         }
-                    })
-                })
-                .then((results) => {
-                    this.movies.forEach((movie) => {
-
-                        let valore = movie.vote_average / 2;
-                        var arrotondato = Math.round(valore);
-                        console.log(arrotondato);
-
                     })
                 })
         }

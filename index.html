@@ -41,12 +41,8 @@
                         Lingua originale: {{ movie.original_language }}
                     </li> -->
                     <li>
-                        Voto: {{ movie.vote_average }}
-                        <i class="far fa-star"></i>
-                        <i class="far fa-star"></i>
-                        <i class="far fa-star"></i>
-                        <i class="far fa-star"></i>
-                        <i class="far fa-star"></i>
+                        Voto: 
+                        <i v-for="i in getFasStar(movie.vote_average)" class="fas fa-star"></i><i v-for="i in getFarStar(movie.vote_average)" class="far fa-star"></i>
                     </li>
                 </ul>
             </div>
