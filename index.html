@@ -22,10 +22,11 @@
     <body>
         <div id="root">
             <div class="comandi">
-                <input v-model="filterTitle" type="text" placeholder="Cerca un titolo">
+                <input v-model="filterTitle" @keyup.enter="search" type="text" placeholder="Cerca un titolo">
                 <button type="button" name="button" @click="search">Search</button>
             </div>
             <div class="container" >
+                <h1>Film risultati dalla ricerca</h1>
                 <ul v-for="movie in movies">
                     <li>
                         Titolo: {{ movie.title }}
@@ -33,16 +34,16 @@
                     <li>
                         Titolo in lingua originale: {{ movie.original_title }}
                     </li>
-                    <li>
+                    <li v-if="availableFlags.includes(movie.original_language)">
                         Lingua originale:
-                        <img :src="movie.original_language" :alt="movie.original_language">
+                        <img :src="'flag/' + movie.original_language + '.png'" :alt="movie.original_language">
                     </li>
-                    <!-- <li v-else>
+                    <li v-else>
                         Lingua originale: {{ movie.original_language }}
-                    </li> -->
+                    </li>
                     <li>
-                        Voto: 
-                        <i v-for="i in getFasStar(movie.vote_average)" class="fas fa-star"></i><i v-for="i in getFarStar(movie.vote_average)" class="far fa-star"></i>
+                        Voto:
+                        <i v-for="i in getFasStar(movie.vote_average)" class="fas fa-star"></i><i v-for="i in 5 - (getFasStar(movie.vote_average))" class="far fa-star"></i>
                     </li>
                 </ul>
             </div>
