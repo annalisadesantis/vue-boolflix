@@ -34,10 +34,19 @@
                         Titolo in lingua originale: {{ movie.original_title }}
                     </li>
                     <li>
-                        Lingua originale: {{ movie.original_language }}
+                        Lingua originale:
+                        <img :src="movie.original_language" :alt="movie.original_language">
                     </li>
+                    <!-- <li v-else>
+                        Lingua originale: {{ movie.original_language }}
+                    </li> -->
                     <li>
                         Voto: {{ movie.vote_average }}
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
                     </li>
                 </ul>
             </div>

@@ -18,6 +18,33 @@ var app = new Vue({
                     console.log(this.movies);
                     this.filterTitle = "";
                 })
+                .then((results) => {
+                    this.movies.forEach((movie) => {
+
+                        if(movie.original_language == "en"){
+                            movie.original_language = "flag/unitedkindom.png";
+                        }else if(movie.original_language == "it"){
+                            movie.original_language = "flag/italy.png";
+                        }else if(movie.original_language == "es"){
+                            movie.original_language = "flag/spain.png";
+                        }else if(movie.original_language == "pt"){
+                            movie.original_language = "flag/portugal.png";
+                        }else if(movie.original_language == "fr"){
+                            movie.original_language = "flag/france.png";
+                        }else if(movie.original_language == "de"){
+                            movie.original_language = "flag/germany.png";
+                        }
+                    })
+                })
+                .then((results) => {
+                    this.movies.forEach((movie) => {
+
+                        let valore = movie.vote_average / 2;
+                        var arrotondato = Math.round(valore);
+                        console.log(arrotondato);
+
+                    })
+                })
         }
 
     }
