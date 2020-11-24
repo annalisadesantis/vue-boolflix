@@ -2,7 +2,7 @@ var app = new Vue({
     el: "#root",
     data: {
         filterTitle: "",
-        film: []
+        movies: []
     },
     methods:{
         search(){
@@ -13,10 +13,11 @@ var app = new Vue({
                         query: this.filterTitle
                     }
                 })
-                .then((response) => {
-                    console.log(response);
+                .then((results) => {
+                    this.movies = results.data.results;
+                    console.log(this.movies);
+                    this.filterTitle = "";
                 })
-            console.log(this.filterTitle);
         }
 
     }

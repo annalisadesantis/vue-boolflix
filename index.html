@@ -21,18 +21,26 @@
     </head>
     <body>
         <div id="root">
-            <div class="pulsanti">
+            <div class="comandi">
                 <input v-model="filterTitle" type="text" placeholder="Cerca un titolo">
                 <button type="button" name="button" @click="search">Search</button>
             </div>
-            <div class="container">
-                <ul>
+            <div class="container" >
+                <ul v-for="movie in movies">
                     <li>
-
+                        Titolo: {{ movie.title }}
+                    </li>
+                    <li>
+                        Titolo in lingua originale: {{ movie.original_title }}
+                    </li>
+                    <li>
+                        Lingua originale: {{ movie.original_language }}
+                    </li>
+                    <li>
+                        Voto: {{ movie.vote_average }}
                     </li>
                 </ul>
             </div>
-
         </div>
         <!-- JAVASCRIPT -->
         <script src="main.js" charset="utf-8"></script>

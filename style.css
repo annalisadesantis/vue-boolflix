@@ -6,4 +6,27 @@
 
 body{
     font-family: 'Open Sans', sans-serif;
+    background-color: #141414;
+}
+
+#root{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.comandi{
+    margin-top: 20px;
+}
+
+.container{
+    background-color: red;
+    margin-top: 20px;
+}
+
+.container ul{
+    border: 2px solid blue;
+    list-style-type: none;
+    margin: 20px;
 }
