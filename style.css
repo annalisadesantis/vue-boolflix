@@ -48,6 +48,7 @@ header{
     font-weight: 600;
     color: white;
     outline: 0;
+    cursor: pointer;
 }
 
 /* MAIN */

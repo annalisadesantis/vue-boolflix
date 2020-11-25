@@ -98,5 +98,28 @@ var app = new Vue({
             console.log("lasciato");
             this.movieactive = -1;
         }
+
+    },
+    mounted(){
+        axios.get('https://api.themoviedb.org/3/movie/top_rated', {
+            params:{
+                api_key: 'ff1d795e3b22f2a6056bd3125c445371',
+            }
+        })
+        .then((results) => {
+            // Assegno al risultato dell'api all'array movies
+            this.allresults = results.data.results;
+            console.log(this.allresults);
+            this.allresults.forEach((item) => {
+
+                if (item.poster_path != null) {
+                    item.poster_path = this.url_img + item.poster_path;
+                // Quando hanno null inserisco un'immagine salvata
+                }else{
+                    item.poster_path = 'img-no-disp.png';
+                }
+            });
+        });
+
     }
 });
