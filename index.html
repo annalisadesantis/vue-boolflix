@@ -47,11 +47,11 @@
                     </h2>
                 </div>
                 <div class="card-container">
-                    <div class="card" v-for="(movie,index) in allresults">
+                    <div class="card" v-for="(movie, index) in allresults">
                         <div class="poster-movie" v-if="img_visible">
-                            <img :src="movie.poster_path" :alt="movie.title ? movie.title : movie.name" class="immagine-copertina" @mouseover="mouseenter">
+                            <img :src="movie.poster_path" :alt="movie.title ? movie.title : movie.name" class="immagine-copertina" @mouseover="mouseenter(index)">
                         </div>
-                        <div class="info-movie" v-else @mouseleave="mouseleave">
+                        <div class="info-movie" v-else @mouseleave="mouseleave(index)">
                             <h5>
                                 Titolo: {{movie.title ? movie.title : movie.name}}
                             </h5>
