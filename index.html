@@ -12,6 +12,8 @@
         <!-- GOOGLE FONT -->
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400&display=swap" rel="stylesheet">
         <!-- FONTAWESOME -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
         <!-- AJAX -->
@@ -21,32 +23,41 @@
     </head>
     <body>
         <div id="root">
-            <div class="comandi">
-                <input v-model="filterTitle" @keyup.enter="search" type="text" placeholder="Cerca un titolo">
-                <button type="button" name="button" @click="search">Search</button>
-            </div>
-            <div class="container" >
-                <h1>Film risultati dalla ricerca</h1>
-                <ul v-for="movie in allresults">
-                    <li>
-                        Titolo: {{movie.title ? movie.title : movie.name}}
-                    </li>
-                    <li>
-                        Titolo in lingua originale: {{movie.original_title ? movie.original_title : movie.original_name}}
-                    </li>
-                    <li v-if="availableFlags.includes(movie.original_language)">
-                        Lingua originale:
-                        <img :src="'flag/' + movie.original_language + '.png'" :alt="movie.original_language">
-                    </li>
-                    <li v-else>
-                        Lingua originale: {{ movie.original_language }}
-                    </li>
-                    <li>
-                        Voto:
-                        <i v-for="i in getFasStar(movie.vote_average)" class="fas fa-star"></i><i v-for="i in 5 - (getFasStar(movie.vote_average))" class="far fa-star"></i>
-                    </li>
-                </ul>
-            </div>
+            <!-- HEADER -->
+            <header>
+                <div class="header-left">
+                    <h1>Boolflix</h1>
+                </div>
+                <div class="header-right">
+                    <input v-model="filterTitle" @keyup.enter="search" type="text" placeholder="Cerca un titolo">
+                    <button type="button" name="button" @click="search">Cerca</button>
+                </div>
+            </header>
+            <!-- MAIN -->
+            <main>
+                <div class="container" >
+                    <h1>Film risultati dalla ricerca</h1>
+                    <ul v-for="movie in allresults">
+                        <li>
+                            Titolo: {{movie.title ? movie.title : movie.name}}
+                        </li>
+                        <li>
+                            Titolo in lingua originale: {{movie.original_title ? movie.original_title : movie.original_name}}
+                        </li>
+                        <li v-if="availableFlags.includes(movie.original_language)">
+                            Lingua originale:
+                            <img :src="'flag/' + movie.original_language + '.png'" :alt="movie.original_language">
+                        </li>
+                        <li v-else>
+                            Lingua originale: {{ movie.original_language }}
+                        </li>
+                        <li>
+                            Voto:
+                            <i v-for="i in getFasStar(movie.vote_average)" class="fas fa-star"></i><i v-for="i in 5 - (getFasStar(movie.vote_average))" class="far fa-star"></i>
+                        </li>
+                    </ul>
+                </div>
+            </main>
         </div>
         <!-- JAVASCRIPT -->
         <script src="main.js" charset="utf-8"></script>
