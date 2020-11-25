@@ -53,19 +53,29 @@ header{
 /* MAIN */
 
 main{
+    background-color: white;
+    margin: auto;
+    margin-top: 20px;
+    max-width: 1170px;
+}
+
+.testo-container{
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.container{
-    background-color: white;
-    margin-top: 20px;
-    max-width: 1170px;
+.card-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.container ul{
+.card-container ul{
     border: 2px solid blue;
     list-style-type: none;
     margin: 20px;
+    width: 200px;
+    height: 300px;
 }

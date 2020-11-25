@@ -35,8 +35,18 @@
             </header>
             <!-- MAIN -->
             <main>
-                <div class="container" >
-                    <h1>Film risultati dalla ricerca</h1>
+                <div class="testo-container">
+                    <h2 v-if="ricerca_in_corso">
+                        Ricerca in corso...
+                    </h2>
+                    <h2 v-else-if="testo_titolo && allresults.length">
+                        Risultati ricerca per: {{ testo_titolo }}
+                    </h2>
+                    <h2 v-else-if="testo_titolo">
+                        Nessun risultato trovarto per la ricerca: {{ testo_titolo }}
+                    </h2>
+                </div>
+                <div class="card-container">
                     <ul v-for="movie in allresults">
                         <li>
                             Titolo: {{movie.title ? movie.title : movie.name}}

@@ -10,7 +10,10 @@ var app = new Vue({
         // Array film + array serie tv
         allresults: [],
         // Array flag disponibili
-        availableFlags: ['it', 'en', 'es', 'fr', 'de', 'pt', 'zh', 'ru', 'ja']
+        availableFlags: ['it', 'en', 'es', 'fr', 'de', 'pt', 'zh', 'ru', 'ja'],
+        // Chiave per salvare la ricerca
+        testo_titolo: "",
+        ricerca_in_corso: false
     },
     methods:{
         // Funzione per calcolare il voto in 5/5
@@ -26,6 +29,18 @@ var app = new Vue({
 
             // Eseguo la ricerca solo se il campo è stato compilato
             if(this.filterTitle.trim() != ''){
+
+                // Attivo la ricerca in corso su true
+                this.ricerca_in_corso = true;
+
+                // Mi assicuro che gli array siano stati svuotati
+                this.movies = [];
+                this.serie = [];
+                this.allresults = [];
+
+                // Salvo il dato della ricerca in un'altra chiave
+                this.testo_titolo = this.filterTitle;
+
                 // Chiamata get per i film
                 axios.get('https://api.themoviedb.org/3/search/movie', {
                     params:{
@@ -51,6 +66,8 @@ var app = new Vue({
                     this.serie = results.data.results;
                     // Assegno ad uno nuovo array il risultato dei due array film e serie
                     this.allresults = this.movies.concat(this.serie);
+                    // Rimposta lo stato della ricerca su false in quanto in questa fase è terminata
+                    this.ricerca_in_corso = false;
                     console.log(this.allresults);
                 });
             }
