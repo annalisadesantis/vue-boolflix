@@ -17,8 +17,8 @@ var app = new Vue({
         ricerca_in_corso: false,
         // Url imaggine base
         url_img: "https://image.tmdb.org/t/p/w342",
-        img_visible: true,
-        movieactive: 0
+        // contatore contatto corrente
+        movieactive: -1
 
     },
     methods:{
@@ -93,12 +93,10 @@ var app = new Vue({
         mouseenter(index){
             console.log("trovato");
             this.movieactive = index;
-            this.img_visible = false;
         },
         mouseleave(index){
             console.log("lasciato");
-            this.movieactive = index;
-            this.img_visible = true;
+            this.movieactive = -1;
         }
     }
 });
