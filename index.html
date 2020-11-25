@@ -49,6 +49,9 @@
                 <div class="card-container">
                     <ul v-for="movie in allresults">
                         <li>
+                            <img :src="movie.poster_path" :alt="movie.title ? movie.title : movie.name" class="immagine-copertina">
+                        </li>
+                        <!-- <li>
                             Titolo: {{movie.title ? movie.title : movie.name}}
                         </li>
                         <li>
@@ -64,7 +67,7 @@
                         <li>
                             Voto:
                             <i v-for="i in getFasStar(movie.vote_average)" class="fas fa-star"></i><i v-for="i in 5 - (getFasStar(movie.vote_average))" class="far fa-star"></i>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </main>

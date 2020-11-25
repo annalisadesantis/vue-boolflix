@@ -13,7 +13,10 @@ var app = new Vue({
         availableFlags: ['it', 'en', 'es', 'fr', 'de', 'pt', 'zh', 'ru', 'ja'],
         // Chiave per salvare la ricerca
         testo_titolo: "",
-        ricerca_in_corso: false
+        // Ricerca titolo
+        ricerca_in_corso: false,
+        // Url imaggine base
+        url_img: "https://image.tmdb.org/t/p/w342"
     },
     methods:{
         // Funzione per calcolare il voto in 5/5
@@ -69,6 +72,18 @@ var app = new Vue({
                     // Rimposta lo stato della ricerca su false in quanto in questa fase è terminata
                     this.ricerca_in_corso = false;
                     console.log(this.allresults);
+
+                    // Creo un ciclo per modificare l'url delle immagini
+                    this.allresults.forEach((item) => {
+
+                        if (item.poster_path != null) {
+                            item.poster_path = this.url_img + item.poster_path;
+                        // Quando hanno null inserisco un'immagine salvata 
+                        }else{
+                            item.poster_path = 'img-no-disp.png';
+                        }
+                    });
+
                 });
             }
         }
