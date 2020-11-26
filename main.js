@@ -78,6 +78,7 @@ var app = new Vue({
                             item.poster_path = 'img-no-disp.png';
                         }
 
+                        // aggiungo la chiave cast a tutti gli oggetti
                         item.cast = "";
 
                         // Chiamata get per attori

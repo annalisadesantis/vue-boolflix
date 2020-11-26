@@ -81,6 +81,18 @@
                             <p v-else>
                                 Vote not available
                             </p>
+                            <p v-if="movie.cast.length != '' ">
+                                Actors:
+                                <span v-for="(actor,index) in movie.cast" v-if="index < 4">
+                                        {{ actor.name }},
+                                </span>
+                                <span v-for="(actor,index) in movie.cast" v-if="index == 4">
+                                        {{ actor.name }}.
+                                </span>
+                            </p>
+                            <p v-else>
+                                Actors not available
+                            </p>
                             <p v-if="movie.overview != ''">
                                 Description:
                                 <span class="font-normal">
