@@ -64,9 +64,9 @@ var app = new Vue({
                 .then((results) => {
                     // Concateno il risultato dell'api all'array globale
                     this.allresults = this.allresults.concat(results.data.results);
+
                     // Rimposta lo stato della ricerca su false in quanto in questa fase è terminata
                     this.ricerca_in_corso = false;
-                    console.log(this.allresults);
 
                     // Creo un ciclo per modificare l'url delle immagini
                     this.allresults.forEach((item) => {
@@ -77,9 +77,24 @@ var app = new Vue({
                         }else{
                             item.poster_path = 'img-no-disp.png';
                         }
+
+                        item.cast = "";
+
+                        // Chiamata get per attori
+                        axios.get('https://api.themoviedb.org/3/movie/' + item.id + '/credits', {
+                            params:{
+                                api_key: 'ff1d795e3b22f2a6056bd3125c445371',
+                            }
+                        })
+                        .then((results) => {
+                            item.cast = results.data.cast;
+                        })
                     });
 
+                    console.log(this.allresults);
+
                 });
+
             }
         },
         mouseenter(index){
