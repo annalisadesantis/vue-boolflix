@@ -124,6 +124,17 @@ var app = new Vue({
                 }else{
                     item.poster_path = 'img-no-disp.png';
                 }
+
+                item.cast = "";
+
+                axios.get('https://api.themoviedb.org/3/movie/' + item.id + '/credits', {
+                    params:{
+                        api_key: 'ff1d795e3b22f2a6056bd3125c445371',
+                    }
+                })
+                .then((results) => {
+                    item.cast = results.data.cast;
+                })
             });
         });
 
