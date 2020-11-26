@@ -3,10 +3,6 @@ var app = new Vue({
     data: {
         // Input di ricerca
         filterTitle: "",
-        // Array film
-        movies: [],
-        // Array serie tv
-        serie: [],
         // Array film + array serie tv
         allresults: [],
         // Array flag disponibili
@@ -39,9 +35,7 @@ var app = new Vue({
                 // Attivo la ricerca in corso su true
                 this.ricerca_in_corso = true;
 
-                // Mi assicuro che gli array siano stati svuotati
-                this.movies = [];
-                this.serie = [];
+                // Mi assicuro che l'array globale sia vuotoi svuotati
                 this.allresults = [];
 
                 // Salvo il dato della ricerca in un'altra chiave
@@ -55,8 +49,8 @@ var app = new Vue({
                     }
                 })
                 .then((results) => {
-                    // Assegno al risultato dell'api all'array movies
-                    this.movies = results.data.results;
+                    // Concateno il risultato dell'api all'array globale
+                    this.allresults = this.allresults.concat(results.data.results);
                     // Ripulisco l'input
                     this.filterTitle = "";
                 });
@@ -68,10 +62,8 @@ var app = new Vue({
                     }
                 })
                 .then((results) => {
-                    // Assegno al risultato dell'api all'array serie
-                    this.serie = results.data.results;
-                    // Assegno ad uno nuovo array il risultato dei due array film e serie
-                    this.allresults = this.movies.concat(this.serie);
+                    // Concateno il risultato dell'api all'array globale
+                    this.allresults = this.allresults.concat(results.data.results);
                     // Rimposta lo stato della ricerca su false in quanto in questa fase è terminata
                     this.ricerca_in_corso = false;
                     console.log(this.allresults);
@@ -91,11 +83,9 @@ var app = new Vue({
             }
         },
         mouseenter(index){
-            console.log("trovato");
             this.movieactive = index;
         },
         mouseleave(index){
-            console.log("lasciato");
             this.movieactive = -1;
         }
 
