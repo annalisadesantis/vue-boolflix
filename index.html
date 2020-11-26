@@ -29,21 +29,21 @@
                     <h1>Boolflix</h1>
                 </div>
                 <div class="header-right">
-                    <input v-model="filterTitle" @keyup.enter="search" type="text" placeholder="Cerca un titolo">
-                    <button type="button" name="button" @click="search">Cerca</button>
+                    <input v-model="filterTitle" @keyup.enter="search" type="text" placeholder="Search here">
+                    <button type="button" name="button" @click="search">Search</button>
                 </div>
             </header>
             <!-- MAIN -->
             <main>
                 <div class="testo-container">
                     <h2 v-if="ricerca_in_corso">
-                        Ricerca in corso...
+                        Loading...
                     </h2>
                     <h2 v-else-if="testo_titolo && allresults.length">
-                        Risultati ricerca per: {{ testo_titolo }}
+                        Search Results for: {{ testo_titolo }}
                     </h2>
                     <h2 v-else-if="testo_titolo">
-                        Nessun risultato trovarto per la ricerca: {{ testo_titolo }}
+                        There are no results that matched your search: {{ testo_titolo }}
                     </h2>
                 </div>
                 <div class="card-container">
@@ -53,39 +53,42 @@
                         </div>
                         <div class="info-movie" v-else @mouseleave="mouseleave(index)">
                             <h5>
-                                Titolo:
+                                Title:
                                 <span class="font-normal">
                                     {{movie.title ? movie.title : movie.name}}
                                 </span>
                             </h5>
                             <h5>
-                                Titolo in lingua originale:
+                                Original Title:
                                 <span class="font-normal">
                                     {{movie.original_title ? movie.original_title : movie.original_name}}
                                 </span>
                             </h5>
                             <p v-if="availableFlags.includes(movie.original_language)">
-                                Lingua originale:
+                                Original Language:
                                 <img :src="'flag/' + movie.original_language + '.png'" :alt="movie.original_language">
                             </p>
                             <p v-else>
-                                Lingua originale:
+                                Original Language:
                                 <span class="font-normal">
                                     {{ movie.original_language }}
                                 </span>
                             </p>
-                            <p>
-                                Voto:
+                            <p v-if="movie.vote_average">
+                                Vote:
                                 <i v-for="i in getFasStar(movie.vote_average)" class="fas fa-star"></i><i v-for="i in 5 - (getFasStar(movie.vote_average))" class="far fa-star"></i>
                             </p>
+                            <p v-else>
+                                Vote not available
+                            </p>
                             <p v-if="movie.overview != ''">
-                                Descrizione:
+                                Description:
                                 <span class="font-normal">
                                     {{ movie.overview }}
                                 </span>
                             </p>
                             <p v-else>
-                                Descrizione non disponibile
+                                Description not available
                             </p>
                         </div>
                     </div>
