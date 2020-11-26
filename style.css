@@ -27,7 +27,7 @@ header{
 .header-left h1{
     color: #e32636;
     text-transform: uppercase;
-    margin-left: 20px;
+    margin: 0 20px;
     font-family: 'Oswald', sans-serif;
 }
 
