@@ -66,7 +66,6 @@
                                     </span>
                                 </h5>
                                 <p v-if="availableFlags.includes(movie.original_language)">
-                                    Original Language:
                                     <img :src="'flag/' + movie.original_language + '.png'" :alt="movie.original_language">
                                 </p>
                                 <p v-else>
@@ -76,7 +75,6 @@
                                     </span>
                                 </p>
                                 <p v-if="movie.vote_average">
-                                    Vote:
                                     <i v-for="i in getFasStar(movie.vote_average)" class="fas fa-star"></i><i v-for="i in 5 - (getFasStar(movie.vote_average))" class="far fa-star"></i>
                                 </p>
                                 <p v-else>
@@ -95,13 +93,13 @@
                                     Actors not available
                                 </p>
                                 <p v-if="movie.overview != ''">
-                                    Description:
+                                    Overview:
                                     <span class="font-normal">
                                         {{ movie.overview }}
                                     </span>
                                 </p>
                                 <p v-else>
-                                    Description not available
+                                    Overview not available
                                 </p>
                             </div>
                         </div>
