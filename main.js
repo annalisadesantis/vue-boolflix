@@ -30,27 +30,41 @@ var app = new Vue({
             let arrotondato = Math.round(valore);
             return arrotondato;
         },
+        basegenderlist(elemento){
+            axios.get('https://api.themoviedb.org/3/genre/' + elemento + '/list', {
+                params:{
+                    api_key: this.api_key,
+                }
+            })
+            .then(results => {
+                // Assegno al risultato dell'api all'array generi
+                this.generi = this.generi.concat(results.data.genres);
+            });
+        },
         genderlist(){
-            axios.get('https://api.themoviedb.org/3/genre/movie/list', {
-                params:{
-                    api_key: this.api_key,
-                }
-            })
-            .then(results => {
-                // Assegno al risultato dell'api all'array generi
-                this.generi = this.generi.concat(results.data.genres);
-            });
 
-            axios.get('https://api.themoviedb.org/3/genre/tv/list', {
-                params:{
-                    api_key: this.api_key,
-                }
-            })
-            .then(results => {
-                // Assegno al risultato dell'api all'array generi
-                this.generi = this.generi.concat(results.data.genres);
-                console.log(this.generi);
-            });
+            this.basegenderlist('movie');
+            this.basegenderlist('tv');
+            // axios.get('https://api.themoviedb.org/3/genre/movie/list', {
+            //     params:{
+            //         api_key: this.api_key,
+            //     }
+            // })
+            // .then(results => {
+            //     // Assegno al risultato dell'api all'array generi
+            //     this.generi = this.generi.concat(results.data.genres);
+            // });
+            //
+            // axios.get('https://api.themoviedb.org/3/genre/tv/list', {
+            //     params:{
+            //         api_key: this.api_key,
+            //     }
+            // })
+            // .then(results => {
+            //     // Assegno al risultato dell'api all'array generi
+            //     this.generi = this.generi.concat(results.data.genres);
+            //     console.log(this.generi);
+            // });
         },
         getProductGenres(elemento) {
 
@@ -78,7 +92,7 @@ var app = new Vue({
                 });
             });
 
-            // Restituisco l'array dell'elemento già popolato dei nomi dei generi che corrispondono ai suoi id 
+            // Restituisco l'array dell'elemento già popolato dei nomi dei generi che corrispondono ai suoi id
             return lista_generi_elemento.join(", ");
         },
         getPoster(item){
@@ -181,6 +195,7 @@ var app = new Vue({
 
         this.genderlist();
         console.log(this.generi);
+
 
     }
 
