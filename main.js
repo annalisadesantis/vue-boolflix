@@ -37,33 +37,61 @@ var app = new Vue({
                 }
             })
             .then(results => {
-                // Assegno al risultato dell'api all'array movies
-                this.generi = results.data.genres;
-                console.log(this.generi);
+                // Assegno al risultato dell'api all'array generi
+                this.generi = this.generi.concat(results.data.genres);
             });
 
-            // axios.get('https://api.themoviedb.org/3/genre/tv/list', {
-            //     params:{
-            //         api_key: this.api_key,
-            //     }
-            // })
-            // .then(results => {
-            //     // // Assegno al risultato dell'api all'array movies
-            //     // if(!this.generi.includes(results.data.genres)){
-            //     //
-            //     // }
-            //     this.generi = results.data.genres;
-            //     console.log(this.generi);
-            // });
+            axios.get('https://api.themoviedb.org/3/genre/tv/list', {
+                params:{
+                    api_key: this.api_key,
+                }
+            })
+            .then(results => {
+                // Assegno al risultato dell'api all'array generi
+                this.generi = this.generi.concat(results.data.genres);
+                console.log(this.generi);
+            });
         },
-        immagini(item){
+        getProductGenres(elemento) {
+
+            // Creo un array per salvare i generi dell'elemento
+            let lista_generi_elemento = [];
+
+            // Creo una varibile che corrisponde agli ID del singolo elemento
+            let codici_genere_elemento = elemento.genre_ids;
+
+            // Ciclo l'array genery che avevo già creato
+            this.generi.forEach((lista_generi) => {
+
+                // Ciclo gli ID del singolo elemento
+                codici_genere_elemento.forEach((codice_genere_elemento) => {
+
+                    // Se gli id di lista generi concide con gli id dell'elemento
+                    if(lista_generi.id === codice_genere_elemento) {
+
+                        // Ma anche se l'array dell'elemento non include il nome della lista generi
+                        if(!lista_generi_elemento.includes(lista_generi.name)){
+                            // Allora faccio push nell'array dell'elemento
+                            lista_generi_elemento.push(lista_generi.name);
+                        }
+                    }
+                });
+            });
+
+            // Restituisco l'array dell'elemento già popolato dei nomi dei generi che corrispondono ai suoi id 
+            return lista_generi_elemento.join(", ");
+        },
+        getPoster(item){
+
+            var newUrl = "";
 
             if (item.poster_path != null) {
-                item.poster_path = this.url_img + item.poster_path;
+                newUrl = this.url_img + item.poster_path;
             // Quando hanno null inserisco un'immagine salvata
             }else{
-                item.poster_path = 'img-no-disp.png';
+                newUrl = 'img-no-disp.png';
             }
+            return newUrl;
         },
         search(){
 
@@ -79,16 +107,19 @@ var app = new Vue({
                 // Salvo il dato della ricerca in un'altra chiave
                 this.testo_titolo = this.filterTitle;
 
+                // Richiamo la funzione per i film
                 this.eseguiRicerca('movie', 'movie');
+                // Richiamo la funzione per le serie
                 this.eseguiRicerca('tv', 'tv');
 
                 // Ripulisco l'input
                 this.filterTitle = "";
+
             }
         },
         eseguiRicerca(elemento, elementoPerCast) {
 
-            // Chiamata get per i film
+            // Chiamata get per film/serie
             axios.get(this.getbase + elemento, {
                 params:{
                     api_key: this.api_key,
@@ -99,14 +130,11 @@ var app = new Vue({
 
                 this.ricerca_in_corso = false;
 
-                // Concateno il risultato dell'api all'array globale
-                this.allresults = this.allresults.concat(results.data.results);
-
+                // Creo una varibiale di appoggio per sviluppare i risultati
+                var lista = results.data.results;
 
                 // Creo un ciclo aggiungere gli attori
-                this.allresults.forEach((item) => {
-
-                    this.immagini(item);
+                lista.forEach((item) => {
 
                     // Chiamata get per attori
                     axios.get('https://api.themoviedb.org/3/' + elementoPerCast + '/' + item.id + '/credits', {
@@ -118,6 +146,10 @@ var app = new Vue({
                         Vue.set(item, 'cast', results.data.cast);
                     })
                 });
+
+                // Concateno il risultato ottenuto all'array globale
+                this.allresults = this.allresults.concat(lista);
+                console.log(this.allresults);
             });
 
         }
@@ -134,8 +166,6 @@ var app = new Vue({
             this.allresults = results.data.results;
 
             this.allresults.forEach((item) => {
-
-                this.immagini(item);
 
                 axios.get('https://api.themoviedb.org/3/movie/' + item.id + '/credits', {
                     params:{

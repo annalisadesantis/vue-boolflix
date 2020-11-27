@@ -50,7 +50,7 @@
                     <div class="card" v-for="(movie, index) in allresults">
                         <div class="card-inner">
                             <div class="card-front">
-                                <img :src="movie.poster_path" :alt="movie.title ? movie.title : movie.name" class="immagine-copertina">
+                                <img :src="getPoster(movie)" :alt="movie.title ? movie.title : movie.name" class="immagine-copertina">
                             </div>
                             <div class="card-back">
                                 <h4>
@@ -76,6 +76,13 @@
                                 </p>
                                 <p v-else>
                                     Vote not available
+                                </p>
+                                <p v-if="getProductGenres(movie).length">
+                                    Genre:
+                                    <span>{{ getProductGenres(movie) }}</span>
+                                </p>
+                                <p v-else>
+                                    Genre not available
                                 </p>
                                 <p v-if="movie.cast != undefined && movie.cast.length > 0">
                                     Actors:
