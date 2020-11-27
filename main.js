@@ -43,28 +43,11 @@ var app = new Vue({
         },
         genderlist(){
 
+            // Richiamo la funzione per ricavare i generi dei film
             this.basegenderlist('movie');
+            // Richiamo la funzione per ricavare i generi delle serie
             this.basegenderlist('tv');
-            // axios.get('https://api.themoviedb.org/3/genre/movie/list', {
-            //     params:{
-            //         api_key: this.api_key,
-            //     }
-            // })
-            // .then(results => {
-            //     // Assegno al risultato dell'api all'array generi
-            //     this.generi = this.generi.concat(results.data.genres);
-            // });
-            //
-            // axios.get('https://api.themoviedb.org/3/genre/tv/list', {
-            //     params:{
-            //         api_key: this.api_key,
-            //     }
-            // })
-            // .then(results => {
-            //     // Assegno al risultato dell'api all'array generi
-            //     this.generi = this.generi.concat(results.data.genres);
-            //     console.log(this.generi);
-            // });
+
         },
         getProductGenres(elemento) {
 
@@ -195,8 +178,6 @@ var app = new Vue({
 
         this.genderlist();
         console.log(this.generi);
-
-
     }
 
 });
