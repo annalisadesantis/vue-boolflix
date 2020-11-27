@@ -12,9 +12,7 @@ var app = new Vue({
         // Ricerca titolo
         ricerca_in_corso: false,
         // Url imaggine base
-        url_img: "https://image.tmdb.org/t/p/w342",
-        // contatore contatto corrente
-        movieactive: -1
+        url_img: "https://image.tmdb.org/t/p/w342"
 
     },
     methods:{
@@ -97,12 +95,6 @@ var app = new Vue({
                 });
 
             }
-        },
-        mouseenter(index){
-            this.movieactive = index;
-        },
-        mouseleave(index){
-            this.movieactive = -1;
         }
 
     },
