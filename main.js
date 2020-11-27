@@ -22,7 +22,6 @@ var app = new Vue({
     methods:{
         // Funzione per calcolare il voto in 5/5
         getFasStar(average) {
-
             // Divido il valore voto
             let valore = average / 2;
             // Arrotondo il valore per eccesso
@@ -56,7 +55,7 @@ var app = new Vue({
                     // Ripulisco l'input
                     this.filterTitle = "";
 
-                    // Creo un ciclo per modificare l'url delle immagini
+                    // Creo un ciclo aggiungere gli attori
                     this.allresults.forEach((item) => {
 
                         // Chiamata get per attori
@@ -86,7 +85,7 @@ var app = new Vue({
                     // Rimposta lo stato della ricerca su false in quanto in questa fase è terminata
                     this.ricerca_in_corso = false;
 
-                    // Creo un ciclo per modificare l'url delle immagini
+                    // Creo un ciclo per modificare l'url delle immagini + il cast
                     this.allresults.forEach((item) => {
 
                         if (item.poster_path != null) {
@@ -107,16 +106,11 @@ var app = new Vue({
                         })
                     });
 
-                    console.log(this.serietv);
                     console.log(this.allresults);
 
                 });
-
-
-
             }
         }
-
     },
     mounted(){
         axios.get('https://api.themoviedb.org/3/movie/top_rated', {
