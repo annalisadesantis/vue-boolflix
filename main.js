@@ -41,6 +41,20 @@ var app = new Vue({
                 this.generi = results.data.genres;
                 console.log(this.generi);
             });
+
+            // axios.get('https://api.themoviedb.org/3/genre/tv/list', {
+            //     params:{
+            //         api_key: this.api_key,
+            //     }
+            // })
+            // .then(results => {
+            //     // // Assegno al risultato dell'api all'array movies
+            //     // if(!this.generi.includes(results.data.genres)){
+            //     //
+            //     // }
+            //     this.generi = results.data.genres;
+            //     console.log(this.generi);
+            // });
         },
         immagini(item){
 
@@ -65,71 +79,47 @@ var app = new Vue({
                 // Salvo il dato della ricerca in un'altra chiave
                 this.testo_titolo = this.filterTitle;
 
-                // Chiamata get per i film
-                axios.get( this.getbase + 'movie', {
-                    params:{
-                        api_key: this.api_key,
-                        query: this.filterTitle
-                    }
-                })
-                .then((results) => {
-                    // Concateno il risultato dell'api all'array globale
-                    this.allresults = this.allresults.concat(results.data.results);
-                    // Ripulisco l'input
-                    this.filterTitle = "";
+                this.eseguiRicerca('movie', 'movie');
+                this.eseguiRicerca('tv', 'tv');
 
-                    // Creo un ciclo aggiungere gli attori
-                    this.allresults.forEach((item) => {
-
-                        this.immagini(item);
-                        
-                        // Chiamata get per attori
-                        axios.get('https://api.themoviedb.org/3/movie/' + item.id + '/credits', {
-                            params:{
-                                api_key: this.api_key,
-                            }
-                        })
-                        .then((results) => {
-                            Vue.set(item, 'cast', results.data.cast);
-                        })
-                    });
-                });
-
-
-                // Chiamata get per le serie tv
-                axios.get(this.getbase + 'tv', {
-                    params:{
-                        api_key: this.api_key,
-                        query: this.filterTitle
-                    }
-                })
-                .then((results) => {
-                    // Concateno il risultato dell'api all'array globale
-                    this.allresults = this.allresults.concat(results.data.results);
-
-                    // Rimposta lo stato della ricerca su false in quanto in questa fase è terminata
-                    this.ricerca_in_corso = false;
-
-                    // Creo un ciclo per modificare l'url delle immagini + il cast
-                    this.allresults.forEach((item) => {
-
-                        this.immagini(item);
-
-                        // Chiamata get per attori
-                        axios.get('https://api.themoviedb.org/3/tv/' + item.id + '/credits', {
-                            params:{
-                                api_key: this.api_key,
-                            }
-                        })
-                        .then((results) => {
-                            Vue.set(item, 'cast', results.data.cast);
-                        })
-                    });
-
-                    console.log(this.allresults);
-
-                });
+                // Ripulisco l'input
+                this.filterTitle = "";
             }
+        },
+        eseguiRicerca(elemento, elementoPerCast) {
+
+            // Chiamata get per i film
+            axios.get(this.getbase + elemento, {
+                params:{
+                    api_key: this.api_key,
+                    query: this.filterTitle
+                }
+            })
+            .then((results) => {
+
+                this.ricerca_in_corso = false;
+
+                // Concateno il risultato dell'api all'array globale
+                this.allresults = this.allresults.concat(results.data.results);
+
+
+                // Creo un ciclo aggiungere gli attori
+                this.allresults.forEach((item) => {
+
+                    this.immagini(item);
+
+                    // Chiamata get per attori
+                    axios.get('https://api.themoviedb.org/3/' + elementoPerCast + '/' + item.id + '/credits', {
+                        params:{
+                            api_key: this.api_key,
+                        }
+                    })
+                    .then((results) => {
+                        Vue.set(item, 'cast', results.data.cast);
+                    })
+                });
+            });
+
         }
     },
     mounted(){
