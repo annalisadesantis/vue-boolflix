@@ -12,7 +12,9 @@ var app = new Vue({
         // Ricerca titolo
         ricerca_in_corso: false,
         // Url imaggine base
-        url_img: "https://image.tmdb.org/t/p/w342"
+        url_img: "https://image.tmdb.org/t/p/w342",
+        // Array serie tv
+        serietv: []
 
     },
     methods:{
@@ -51,20 +53,6 @@ var app = new Vue({
                     this.allresults = this.allresults.concat(results.data.results);
                     // Ripulisco l'input
                     this.filterTitle = "";
-                });
-                // Chiamata get per le serie tv
-                axios.get('https://api.themoviedb.org/3/search/tv', {
-                    params:{
-                        api_key: 'ff1d795e3b22f2a6056bd3125c445371',
-                        query: this.filterTitle
-                    }
-                })
-                .then((results) => {
-                    // Concateno il risultato dell'api all'array globale
-                    this.allresults = this.allresults.concat(results.data.results);
-
-                    // Rimposta lo stato della ricerca su false in quanto in questa fase è terminata
-                    this.ricerca_in_corso = false;
 
                     // Creo un ciclo per modificare l'url delle immagini
                     this.allresults.forEach((item) => {
@@ -89,7 +77,47 @@ var app = new Vue({
                             item.cast = results.data.cast;
                         })
                     });
+                });
+                // Chiamata get per le serie tv
+                axios.get('https://api.themoviedb.org/3/search/tv', {
+                    params:{
+                        api_key: 'ff1d795e3b22f2a6056bd3125c445371',
+                        query: this.filterTitle
+                    }
+                })
+                .then((results) => {
+                    // Concateno il risultato dell'api all'array globale
+                    this.serietv = results.data.results;
 
+                    // Rimposta lo stato della ricerca su false in quanto in questa fase è terminata
+                    this.ricerca_in_corso = false;
+
+                    // Creo un ciclo per modificare l'url delle immagini
+                    this.serietv.forEach((item) => {
+
+                        if (item.poster_path != null) {
+                            item.poster_path = this.url_img + item.poster_path;
+                        // Quando hanno null inserisco un'immagine salvata
+                        }else{
+                            item.poster_path = 'img-no-disp.png';
+                        }
+
+                        // aggiungo la chiave cast a tutti gli oggetti
+                        item.cast = "";
+
+                        // Chiamata get per attori
+                        axios.get('https://api.themoviedb.org/3/tv/' + item.id + '/credits', {
+                            params:{
+                                api_key: 'ff1d795e3b22f2a6056bd3125c445371',
+                            }
+                        })
+                        .then((results) => {
+                            item.cast = results.data.cast;
+                            this.allresults.concat(this.serietv);
+                        })
+                    });
+
+                    console.log(this.serietv);
                     console.log(this.allresults);
 
                 });
@@ -107,7 +135,7 @@ var app = new Vue({
         .then((results) => {
             // Assegno al risultato dell'api all'array movies
             this.allresults = results.data.results;
-            console.log(this.allresults);
+
             this.allresults.forEach((item) => {
 
                 if (item.poster_path != null) {
@@ -128,7 +156,11 @@ var app = new Vue({
                     item.cast = results.data.cast;
                 })
             });
+
+            console.log(this.allresults);
         });
+
+
 
     }
 });
