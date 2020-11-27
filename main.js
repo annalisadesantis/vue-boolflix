@@ -36,10 +36,20 @@ var app = new Vue({
                     api_key: this.api_key,
                 }
             })
-            .then((results) => {
+            .then(results => {
                 // Assegno al risultato dell'api all'array movies
                 this.generi = results.data.genres;
+                console.log(this.generi);
             });
+        },
+        immagini(item){
+
+            if (item.poster_path != null) {
+                item.poster_path = this.url_img + item.poster_path;
+            // Quando hanno null inserisco un'immagine salvata
+            }else{
+                item.poster_path = 'img-no-disp.png';
+            }
         },
         search(){
 
@@ -71,6 +81,8 @@ var app = new Vue({
                     // Creo un ciclo aggiungere gli attori
                     this.allresults.forEach((item) => {
 
+                        this.immagini(item);
+                        
                         // Chiamata get per attori
                         axios.get('https://api.themoviedb.org/3/movie/' + item.id + '/credits', {
                             params:{
@@ -101,12 +113,7 @@ var app = new Vue({
                     // Creo un ciclo per modificare l'url delle immagini + il cast
                     this.allresults.forEach((item) => {
 
-                        if (item.poster_path != null) {
-                            item.poster_path = this.url_img + item.poster_path;
-                        // Quando hanno null inserisco un'immagine salvata
-                        }else{
-                            item.poster_path = 'img-no-disp.png';
-                        }
+                        this.immagini(item);
 
                         // Chiamata get per attori
                         axios.get('https://api.themoviedb.org/3/tv/' + item.id + '/credits', {
@@ -138,12 +145,7 @@ var app = new Vue({
 
             this.allresults.forEach((item) => {
 
-                if (item.poster_path != null) {
-                    item.poster_path = this.url_img + item.poster_path;
-                // Quando hanno null inserisco un'immagine salvata
-                }else{
-                    item.poster_path = 'img-no-disp.png';
-                }
+                this.immagini(item);
 
                 axios.get('https://api.themoviedb.org/3/movie/' + item.id + '/credits', {
                     params:{
@@ -156,7 +158,7 @@ var app = new Vue({
             });
 
         });
-        
+
         this.genderlist();
         console.log(this.generi);
 
