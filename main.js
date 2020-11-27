@@ -16,7 +16,9 @@ var app = new Vue({
         // Url imaggine base
         url_img: "https://image.tmdb.org/t/p/w342",
         // Api key
-        api_key: "ff1d795e3b22f2a6056bd3125c445371"
+        api_key: "ff1d795e3b22f2a6056bd3125c445371",
+        // Array generi
+        generi: []
 
     },
     methods:{
@@ -27,6 +29,17 @@ var app = new Vue({
             // Arrotondo il valore per eccesso
             let arrotondato = Math.round(valore);
             return arrotondato;
+        },
+        genderlist(){
+            axios.get('https://api.themoviedb.org/3/genre/movie/list', {
+                params:{
+                    api_key: this.api_key,
+                }
+            })
+            .then((results) => {
+                // Assegno al risultato dell'api all'array movies
+                this.generi = results.data.genres;
+            });
         },
         search(){
 
@@ -113,6 +126,7 @@ var app = new Vue({
         }
     },
     mounted(){
+
         axios.get('https://api.themoviedb.org/3/movie/top_rated', {
             params:{
                 api_key: this.api_key,
@@ -141,8 +155,11 @@ var app = new Vue({
                 })
             });
 
-
         });
+        
+        this.genderlist();
+        console.log(this.generi);
 
     }
+
 });
