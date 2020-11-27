@@ -53,12 +53,12 @@
                                 <img :src="movie.poster_path" :alt="movie.title ? movie.title : movie.name" class="immagine-copertina">
                             </div>
                             <div class="card-back">
-                                <h5>
-                                    Title:
-                                    <span class="font-normal">
+                                <h4>
+                                    {{movie.title ? movie.title : movie.name}}
+                                    <!-- <span class="font-normal">
                                         {{movie.title ? movie.title : movie.name}}
-                                    </span>
-                                </h5>
+                                    </span> -->
+                                </h4>
                                 <h5>
                                     Original Title:
                                     <span class="font-normal">
@@ -82,13 +82,13 @@
                                 <p v-else>
                                     Vote not available
                                 </p>
-                                <p v-if="movie.cast.length != '' ">
+                                <p v-if="movie.cast.length != ''">
                                     Actors:
                                     <span v-for="(actor,index) in movie.cast" v-if="index < 4">
                                             {{ actor.name }},
                                     </span>
                                     <span v-for="(actor,index) in movie.cast" v-if="index == 4">
-                                            {{ actor.name }}.
+                                        {{ actor.name }}.
                                     </span>
                                 </p>
                                 <p v-else>
@@ -108,6 +108,11 @@
                     </div>
                 </div>
             </main>
+            <footer>
+                <div>
+                    Product by Annalisa De Santis @2020
+                </div>
+            </footer>
         </div>
         <!-- JAVASCRIPT -->
         <script src="main.js" charset="utf-8"></script>
