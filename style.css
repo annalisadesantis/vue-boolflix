@@ -6,7 +6,9 @@
 
 body{
     font-family: 'Open Sans', sans-serif;
-    background-color: #333333;
+    background-image: url('sfondo.png');
+    object-fit: contain;
+    background-size: auto;
 }
 
 #root{
@@ -67,7 +69,8 @@ main{
 }
 
 .testo-container h2{
-    color: #e32636;
+    /* color: #e32636; */
+    color: white;
 }
 
 .card-container{
@@ -111,7 +114,8 @@ main{
 }
 
 .card-back{
-    color: black;
+    color: white;
+    background-color: #141414;
     padding: 10px;
     transform: rotateY(180deg);
     overflow-y: auto;
